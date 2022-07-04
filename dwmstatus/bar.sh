@@ -6,7 +6,7 @@
 interval=0
 
 # load colors
-. ~/deweem/dwmstatus/gruvbox
+. ~/Developments/deweem/dwmstatus/gruvbox
 
 cpu() {
   cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
