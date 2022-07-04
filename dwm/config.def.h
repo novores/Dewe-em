@@ -20,16 +20,17 @@ static const char col_yellow[]      = "#d79921";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray4, col_gray1, col_gray3 },
-	[SchemeSel]  = { col_yellow, col_gray1,  col_yellow  },
+	[SchemeSel]  = { col_yellow, col_gray1,  col_gray4 },
 };
 
+// autostart
 static const char *const autostart[] = {
 	"xrdb", "-merge", "/home/novores/.Xresources", NULL,
   "feh", "--bg-fill", "/home/novores/Gambar/wallpapers/animation_gruvbox.jpg", NULL,
   "/usr/libexec/polkit-mate-authentication-agent-1", NULL,
-  "unclutter", NULL,
-  "sh", "-c", "/home/novores/deweem/xautolock.sh", NULL,
-  "sh", "-c", "pkill bar.sh; /home/novores/deweem/dwmstatus/bar.sh", NULL,
+  "xbanish", NULL,
+  "sh", "-c", "/home/novores/Developments/deweem/xautolock.sh", NULL,
+  "sh", "-c", "pkill bar.sh; /home/novores/Developments/deweem/dwmstatus/bar.sh", NULL,
 	NULL /* terminate */
 };
 
@@ -62,6 +63,7 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod4Mask
+#define ALTKEY Mod1Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -76,7 +78,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-c", "-bw", "3", "-l", "7", "-h", "35", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray4, "-sb", col_yellow, "-sf", col_gray2, NULL };
+static const char *dmenucmd[] = { "/home/novores/.local/bin/dmenu_run_i", "-m", dmenumon, "-c", "-bw", "3", "-l", "7", "-h", "35", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray4, "-sb", col_yellow, "-sf", col_gray2, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *volup[] = {"pamixer", "-i", "5", NULL};
 static const char *voldown[] = {"pamixer", "-d", "5", NULL};
@@ -118,18 +120,23 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-  { MODKEY|ControlMask,           XK_q,                      quit }, 
+  { MODKEY|ControlMask,           XK_q,        quit,         {0} }, 
+  
   //launcher
-  { MODKEY|ShiftMask,             XK_t,       spawn,        SHCMD("/usr/local/bin/dmenu-translate") }, 
   { MODKEY|ControlMask,           XK_l,       spawn,        SHCMD("xautolock -locknow -locker slock -killtime 10 -killer 'loginctl suspend' -detectsleep") }, 
-  //launcher
+
   //command using xf86 keys
   {0,                             XF86XK_AudioMute,           spawn,  {.v = mute}},
   {0,                             XF86XK_AudioRaiseVolume,    spawn,  {.v = volup}},
   {0,                             XF86XK_AudioLowerVolume,    spawn,  {.v = voldown}},
   {0,                             XF86XK_MonBrightnessUp,     spawn,  {.v = brup}},
   {0,                             XF86XK_MonBrightnessDown,   spawn,  {.v = brdown}},
+
+  // Misc
+  {ALTKEY,                        XK_m,       spawn,        SHCMD("mpd && dunstify 'mpd' 'online'")},
+  {ALTKEY|ShiftMask,              XK_m,       spawn,        SHCMD("pkill mpd && dunstify 'mpd' 'offline'")},
 };
+
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
