@@ -10,7 +10,6 @@ interval=0
 
 cpu() {
   cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
-
   printf "^c$black^^b$green^ "CPU" ^d^%s" "^c$white^^b$grey^ $cpu_val "
 }
 
@@ -64,10 +63,20 @@ volume() {
   fi
 }
 
+mpd() {
+  get_music=$(mpc | awk NR==1 | cut -c 1-25)
+  printf "^b$darkyellow^^c$black^ MPD ^d^"
+  if pgrep mpd > /dev/null; then
+    [[ $get_music == "volume*" ]] && printf "stopped" || printf "^b$grey^ $get_music"; printf "... ^d^"
+  else
+    printf "^b$grey^ Offline ^d^"
+  fi
+}
+
 while true; do
 
   # [ $interval = 0 ] || [ $(($interval % 3600)) = 0 ] && updates=$(pkg_updates)
   # interval=$((interval + 1))
 
-  sleep 1 && xsetroot -name "$(volume) $(brightness) $(cpu) $(mem) $(wlan) $(battery) $(clock)"
+  sleep 1 && xsetroot -name "$(mpd) $(volume) $(brightness) $(cpu) $(mem) $(wlan) $(battery) $(clock)"
 done

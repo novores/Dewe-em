@@ -1,7 +1,6 @@
 #!/bin/dash
 
 # colors
-
 black=#282828
 grey=#3c3836
 green=#89b482
@@ -11,3 +10,5 @@ red=#fb4934
 darkred=#fb4934
 darkblue=#6080a0
 magenta=#d3869b
+yellow=#fabd2f
+darkyellow=#d79921

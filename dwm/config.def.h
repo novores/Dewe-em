@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 0;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
@@ -11,6 +11,9 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;     /* 0 means no bar */
 static const int topbar             = 1;     /* 0 means bottom bar */
+static const double activeopacity   = 1.0f;     /* Window opacity when it's focused (0 <= opacity <= 1) */
+static const double inactiveopacity = 0.8f;   /* Window opacity when it's inactive (0 <= opacity <= 1) */
+static       Bool bUseOpacity       = True;     /* Starts with opacity on any unfocused windows */
 static const int horizpadbar        = 3;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 1;        /* vertical padding for statusbar */
 static const char *fonts[]          = { "JetBrainsMono Nerd Font:style=Medium:size=9.5" };
@@ -34,6 +37,7 @@ static const char *const autostart[] = {
   "xbanish", NULL,
   "sh", "-c", "/home/novores/Developments/deweem/xautolock.sh", NULL,
   "sh", "-c", "pkill bar.sh; /home/novores/Developments/deweem/dwmstatus/bar.sh", NULL,
+  "sh", "-c", "xcompmgr -c -C -t-5 -l-5 -r4.2 -o.55", NULL,
 	NULL /* terminate */
 };
 
@@ -81,13 +85,13 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "/home/novores/.local/bin/dmenu_run_i", "-m", dmenumon, "-c", "-bw", "3", "-l", "7", "-h", "35", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray4, "-sb", col_yellow, "-sf", col_gray2, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-c", "-bw", "3", "-l", "7", "-h", "35", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray4, "-sb", col_yellow, "-sf", col_gray2, NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char *volup[] = {"pamixer", "-i", "5", NULL};
-static const char *voldown[] = {"pamixer", "-d", "5", NULL};
+static const char *volup[] = {"pamixer", "-i", "2", NULL};
+static const char *voldown[] = {"pamixer", "-d", "2", NULL};
 static const char *mute[] = {"pamixer", "-t", NULL};
-static const char *brup[] = {"xbacklight", "-inc", "5", NULL};
-static const char *brdown[] = {"xbacklight", "-dec", "5", NULL};
+static const char *brup[] = {"xbacklight", "-inc", "2", NULL};
+static const char *brdown[] = {"xbacklight", "-dec", "2", NULL};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -102,6 +106,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
+	{ MODKEY,                       XK_a,      toggleopacity,  {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
