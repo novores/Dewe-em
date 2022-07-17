@@ -35,6 +35,7 @@ static const char *const autostart[] = {
   "feh", "--bg-fill", "/home/novores/Gambar/wallpapers/animation_gruvbox.jpg", NULL,
   "/usr/libexec/polkit-mate-authentication-agent-1", NULL,
   "xbanish", NULL,
+  "pipewire-pulse", NULL,
   "sh", "-c", "/home/novores/Developments/deweem/xautolock.sh", NULL,
   "sh", "-c", "pkill bar.sh; /home/novores/Developments/deweem/dwmstatus/bar.sh", NULL,
   "sh", "-c", "xcompmgr -c -C -t-5 -l-5 -r4.2 -o.55", NULL,
@@ -85,7 +86,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-c", "-bw", "3", "-l", "7", "-h", "35", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray4, "-sb", col_yellow, "-sf", col_gray2, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-s", "-m", dmenumon, "-c", "-bw", "3", "-l", "7", "-h", "35", "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray4, "-sb", col_yellow, "-sf", col_gray2, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *volup[] = {"pamixer", "-i", "2", NULL};
 static const char *voldown[] = {"pamixer", "-d", "2", NULL};

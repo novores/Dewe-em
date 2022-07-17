@@ -13,18 +13,6 @@ cpu() {
   printf "^c$black^^b$green^ "CPU" ^d^%s" "^c$white^^b$grey^ $cpu_val "
 }
 
-# pkg_updates() {
-#   updates=$(doas xbps-install -un | wc -l) # void
-#   # updates=$(pacman -Qu | wc -l)   # arch
-#   # updates=$(aptitude search '~U' | wc -l)  # apt (ubuntu,debian etc)
-#
-#   if [ -z "$updates" ]; then
-#     printf "^c$green^  Fully Updated"
-#   else
-#     printf "^c$green^  $updates"" updates"
-#   fi
-# }
-
 battery() {
   get_capacity="$(cat /sys/class/power_supply/BAT0/capacity)"
   printf "^c$green^ ^d^%s" "^c$green^ $get_capacity "
@@ -49,7 +37,7 @@ wlan() {
 }
 
 clock() {
-	printf "^c$black^^b$darkblue^ 󱑆 ^d^%s" "^c$black^^b$blue^ $(date '+%H:%M') "
+	printf "^c$black^^b$darkblue^ 󱑆 ^d^%s" "^c$black^^b$blue^ $(date '+%_a,%e %H:%M') "
 }
 
 volume() {
@@ -64,19 +52,15 @@ volume() {
 }
 
 mpd() {
-  get_music=$(mpc | awk NR==1 | cut -c 1-25)
   printf "^b$darkyellow^^c$black^ MPD ^d^"
+  get_music=$(mpc | awk NR==1 | cut -c 1-25)
   if pgrep mpd > /dev/null; then
-    [[ $get_music == "volume*" ]] && printf "stopped" || printf "^b$grey^ $get_music"; printf "... ^d^"
+    [ "$get_music" = "volume: n/a   repeat: off" ] && printf "^b$grey^ Stopped ^d^" || printf "^b$grey^ $get_music... ^d^"
   else
     printf "^b$grey^ Offline ^d^"
   fi
 }
 
 while true; do
-
-  # [ $interval = 0 ] || [ $(($interval % 3600)) = 0 ] && updates=$(pkg_updates)
-  # interval=$((interval + 1))
-
   sleep 1 && xsetroot -name "$(mpd) $(volume) $(brightness) $(cpu) $(mem) $(wlan) $(battery) $(clock)"
 done
