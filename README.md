@@ -1,4 +1,5 @@
 # Personal DWM build
+![screenshot/screenshot.png](Screenshot) 
 ## Introduction
 This is my build dwm in version `6.3` with several patching including:
 - alwayscenter
