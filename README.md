@@ -23,7 +23,7 @@ This is my build dwm in version `6.3` with several patching including:
   git clone https://github.com/novores/dewe-em`
   cd dewe-em/dwm && sudo make install`
   ```
-##Start DWM
+## Start DWM
 1. copy this script, put in `~/.local/bin/` and naming it "startdwm. 
   ```bash
   #/bin/sh
