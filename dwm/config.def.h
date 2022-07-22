@@ -1,5 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 
+/* helper for spawning shell commands in the pre dwm-5.0 fashion */
+#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+
 /* appearance */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -36,9 +39,10 @@ static const char *const autostart[] = {
   "/usr/libexec/polkit-mate-authentication-agent-1", NULL,
   "xbanish", NULL,
   "pipewire-pulse", NULL,
-  "sh", "-c", "/home/novores/Developments/deweem/xautolock.sh", NULL,
-  "sh", "-c", "pkill bar.sh; /home/novores/Developments/deweem/dwmstatus/bar.sh", NULL,
-  "sh", "-c", "xcompmgr -c -C -t-5 -l-5 -r4.2 -o.55", NULL,
+  "/home/novores/Developments/deweem/xautolock.sh", NULL,
+  "/home/novores/Developments/deweem/dwmstatus/bar.sh", NULL,
+  "xcompmgr", "-c", "-C", "-t-5", "-l-5", "-r4.2", "-o.55", NULL,
+  "pkill", "bar.sh", NULL,
 	NULL /* terminate */
 };
 
@@ -77,9 +81,6 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
-
-/* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 // library keyxf86
 #include <X11/XF86keysym.h>
