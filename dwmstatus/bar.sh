@@ -53,11 +53,12 @@ volume() {
 
 mpd() {
   printf "^b$darkyellow^^c$black^ MPD ^d^"
-  get_music=$(mpc | awk NR==1 | cut -c 1-25)
+  get_artist=$(mpc -f "%artist%"| awk NR==1 | cut -c 1-30)
+  get_title=$(mpc -f "%title%"| awk NR==1 | cut -c 1-30)
   if pgrep mpd > /dev/null; then
-    [ "$get_music" = "volume: n/a   repeat: off" ] && printf "^b$grey^ Stopped ^d^" || printf "^b$grey^ $get_music... ^d^"
+    [ "$get_title" = "volume: n/a   repeat: off   ra" ] && printf "^b$grey^ Stopped ^d^" || printf "^b$grey^^c$yellow^ $get_artist ^d^%s" "^b$grey^^c$white^ $get_title ^d^"
   else
-    printf "^b$grey^ Offline ^d^"
+    printf "^c$grey^^b$black^ Offline ^d^"
   fi
 }
 
