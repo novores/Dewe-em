@@ -25,7 +25,7 @@ static const char col_gray1[]       = "#1d2021";
 static const char col_gray2[]       = "#282828";
 static const char col_gray3[]       = "#504945";
 static const char col_gray4[]       = "#ebdbb2";
-static const char col_yellow[]      = "#d79921";
+static const char col_yellow[]      = "#e78a4e";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray4, col_gray1, col_gray3 },
@@ -40,9 +40,8 @@ static const char *const autostart[] = {
   "xbanish", NULL,
   "pipewire-pulse", NULL,
   "/home/novores/Developments/deweem/xautolock.sh", NULL,
-  "/home/novores/Developments/deweem/dwmstatus/bar.sh", NULL,
+  "sh", "-c", "pkill bar.sh; /home/novores/Developments/deweem/dwmstatus/bar.sh", NULL,
   "xcompmgr", "-c", "-C", "-t-5", "-l-5", "-r4.2", "-o.55", NULL,
-  "pkill", "bar.sh", NULL,
 	NULL /* terminate */
 };
 
