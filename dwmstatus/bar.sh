@@ -10,7 +10,7 @@ interval=0
 
 cpu() {
   cpu_val=$(grep -o "^[^ ]*" /proc/loadavg)
-  printf "^c$black^^b$green^ "CPU" ^d^%s" "^c$white^^b$grey^ $cpu_val "
+  printf "^c$black^^b$green^ "CPU" ^d^%s" "^c$white^^b$grey^ $cpu_val ^d^"
 }
 
 battery() {
@@ -25,16 +25,19 @@ brightness() {
 
 mem() {
   get_mem=$(free -h | awk '/^Mem/ { print $3 }' | sed s/i//g)
-  printf "^c$blue^^b$black^  ^d^%s" "^c$blue^$get_mem "
+  printf "^c$blue^  ^d^%s" "^c$blue^$get_mem "
 }
 
-wlan() {
-  get_ssid=$(wpa_cli status | awk NR==4 | cut -c 6-20)
-	case "$(cat /sys/class/net/wl*/operstate 2>/dev/null)" in
-    up) printf "^c$black^^b$blue^ 󰤨 ^d^%s" "^c$blue^ $get_ssid" ;;
-    down) printf "^c$black^^b$blue^ 󰤭 ^d^%s" "^c$blue^ Disconnect" ;;
-	esac
-}
+ wlan() {
+  #  #iwd
+  # get_ssid=$(iwctl station wlan0 show | awk 'NR==7 {print $3}')
+  #wpa_supplicant
+   get_ssid=$(wpa_cli status | awk NR==4 | cut -c 6-20)
+ 	case "$(cat /sys/class/net/wl*/operstate 2>/dev/null)" in
+     up) printf "^c$black^^b$blue^ 󰤨 ^d^%s" "^c$blue^ $get_ssid" ;;
+     down) printf "^c$black^^b$blue^ 󰤭 ^d^%s" "^c$blue^ Disconnect" ;;
+ 	esac
+ }
 
 clock() {
 	printf "^c$black^^b$darkblue^ 󱑆 ^d^%s" "^c$black^^b$blue^ $(date '+%_a,%e %H:%M') "
@@ -52,13 +55,13 @@ volume() {
 }
 
 mpd() {
-  printf "^b$darkyellow^^c$black^ MPD ^d^"
+  printf "^b$yellow^^c$black^ MPD ^d^"
   get_artist=$(mpc -f "%artist%"| awk NR==1 | cut -c 1-30)
   get_title=$(mpc -f "%title%"| awk NR==1 | cut -c 1-30)
   if pgrep mpd > /dev/null; then
-    [ "$get_title" = "volume: n/a   repeat: off   ra" ] && printf "^b$grey^ Stopped ^d^" || printf "^b$grey^^c$yellow^ $get_artist ^d^%s" "^b$grey^^c$white^ $get_title ^d^"
+    [ "$get_title" = "volume: n/a   repeat: off   ra" ] && printf "^b$grey^ Stopped ^d^" || printf "^b$grey^^c$yellow^ $get_artist^d^%s" "^b$grey^^c$white^ $get_title ^d^"
   else
-    printf "^c$grey^^b$black^ Offline ^d^"
+    printf "^b$grey^^c$white^ Offline ^d^"
   fi
 }
 
