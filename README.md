@@ -11,7 +11,8 @@ This is my build dwm in version `6.3` with several patching including:
 - status2d
 - statuspadding
 ## Dependency
-- `gcc` (for compiling)
+- `gcc` 
+- `make`
 ### Optional 
 - `feh` (setting wallpaper)
 - `xbanish` (for autohide cursor when typing)
