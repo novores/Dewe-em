@@ -19,7 +19,7 @@ static const double inactiveopacity = 0.8f;   /* Window opacity when it's inacti
 static       Bool bUseOpacity       = True;     /* Starts with opacity on any unfocused windows */
 static const int horizpadbar        = 3;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 1;        /* vertical padding for statusbar */
-static const char *fonts[]          = { "JetBrainsMono Nerd Font:style=Medium:size=9.5" };
+static const char *fonts[]          = { "JetBrainsMono Nerd Font Bandit:style=Medium:size=9.5" };
 static const char dmenufont[]       = "monospace:size=10";
 static const char col_gray1[]       = "#1d2021";
 static const char col_gray2[]       = "#282828";
@@ -35,7 +35,7 @@ static const char *colors[][3]      = {
 // autostart
 static const char *const autostart[] = {
 	"xrdb", "-merge", "/home/novores/.Xresources", NULL,
-  "feh", "--bg-fill", "/home/novores/Gambar/wallpapers/animation_gruvbox.jpg", NULL,
+  "feh", "--bg-fill", "/home/novores/Gambar/wallpapers/minimalist_logo.jpg", NULL,
   "/usr/libexec/polkit-mate-authentication-agent-1", NULL,
   "xbanish", NULL,
   "pipewire-pulse", NULL,
@@ -53,10 +53,18 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Old School RuneScape",  NULL,       NULL,       1 << 8,       0,           -1 },
-  { "Neovim",   NULL,       NULL,       1 << 3,       0,           -1 },
+	/* class                    instance    title       tags mask     isfloating   monitor */
+	{"Old School RuneScape",    NULL,       NULL,       1 << 7,       1,           -1 },
+	{"net-runelite-client-RuneLite",        NULL,       NULL,       1 << 7,       1,           -1 },
+  {"SimpleScreenRecorder",    NULL,       NULL,       0,            1,           -1},
+  {"qutebrowser",             NULL,       NULL,       1 << 1,       0,           -1},
+  {"Firefox",                 NULL,       NULL,       1 << 1,       0,           -1},
+  {"mpv",                     NULL,       NULL,       0,            1,           -1},
+  {"feh",                     NULL,       NULL,       0,            1,           -1},
+  {"Lxappearance",            NULL,       NULL,       0,            1,           -1},
+  {"qt5ct",                   NULL,       NULL,       0,            1,           -1},
+  {"aft-linux-qt",            NULL,       NULL,       0,            1,           -1},
+  {"KeePassXC",               NULL,       NULL,       0,            1,           -1},
 };
 
 /* layout(s) */
@@ -67,7 +75,7 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
+	{ "    ",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 };
