@@ -35,7 +35,7 @@ static const char *colors[][3]      = {
 // autostart
 static const char *const autostart[] = {
 	"xrdb", "-merge", "/home/novores/.Xresources", NULL,
-  "feh", "--bg-fill", "/home/novores/Gambar/wallpapers/minimalist_logo.jpg", NULL,
+  "feh", "--bg-fill", "/home/novores/Gambar/wallpapers/void-logo.png", NULL,
   "/usr/libexec/polkit-mate-authentication-agent-1", NULL,
   "xbanish", NULL,
   "pipewire-pulse", NULL,
