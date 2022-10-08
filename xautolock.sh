@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/dash
 xautolock \
   -time 7 -locker slock -killtime 30 \
   -killer "loginctl suspend" -notify 30 \
