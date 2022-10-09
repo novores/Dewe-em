@@ -34,11 +34,11 @@ static const char *colors[][3]      = {
 
 // autostart
 static const char *const autostart[] = {
-	"xrdb", "-merge", "/home/novores/.Xresources", NULL,
-  "feh", "--bg-fill", "/home/novores/Gambar/wallpapers/void-logo.png", NULL,
-  "/usr/libexec/polkit-mate-authentication-agent-1", NULL,
+//	"xrdb", "-merge", "/home/novores/.Xresources", NULL,
+  "feh", "--bg-fill", "/home/novores/Gambar/wallpapers/archlinux-simple.png", NULL,
+  "/usr/lib/mate-polkit/polkit-mate-authentication-agent-1", NULL,
   "xbanish", NULL,
-  "pipewire-pulse", NULL,
+ // "pipewire-pulse", NULL,
   "/home/novores/Developments/deweem/xautolock.sh", NULL,
   "sh", "-c", "pkill bar.sh; /home/novores/Developments/deweem/dwmstatus/bar.sh", NULL,
   "xcompmgr", "-c", "-C", "-t-5", "-l-5", "-r4.2", "-o.55", NULL,
@@ -54,8 +54,8 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class                    instance    title       tags mask     isfloating   monitor */
-	{"Old School RuneScape",    NULL,       NULL,       1 << 7,       1,           -1 },
-	{"net-runelite-client-RuneLite",        NULL,       NULL,       1 << 7,       1,           -1 },
+//	{"Old School RuneScape",    NULL,       NULL,       1 << 7,       1,           -1 },
+//	{"net-runelite-client-RuneLite",        NULL,       NULL,       1 << 7,       1,           -1 },
   {"SimpleScreenRecorder",    NULL,       NULL,       0,            1,           -1},
   {"qutebrowser",             NULL,       NULL,       1 << 1,       0,           -1},
   {"Firefox",                 NULL,       NULL,       1 << 1,       0,           -1},

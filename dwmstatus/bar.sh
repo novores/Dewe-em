@@ -3,8 +3,6 @@
 # ^c$var^ = fg color
 # ^b$var^ = bg color
 
-interval=0
-
 # load colors
 . ~/Developments/deweem/dwmstatus/gruvbox
 
@@ -19,7 +17,7 @@ battery() {
 }
 
 brightness() {
-  get_brightness=$(xbacklight -get)
+  get_brightness=$(xbacklight -get | cut -d '.' -f 1)
   printf "^c$red^  ^d^%s" "^c$red^$get_brightness%"
 }
 
@@ -31,16 +29,16 @@ mem() {
  wlan() {
   #  #iwd
   # get_ssid=$(iwctl station wlan0 show | awk 'NR==7 {print $3}')
-  #wpa_supplicant
-   get_ssid=$(wpa_cli status | awk NR==4 | cut -c 6-20)
+  get_ssid=$(iwctl station wlan0 show | awk '/network/ {print $3}')
+   # get_ssid=$(wpa_cli status | awk NR==4 | cut -c 6-20) #wpa_supplicant
  	case "$(cat /sys/class/net/wl*/operstate 2>/dev/null)" in
-     up) printf "^c$black^^b$blue^ 󰤨 ^d^%s" "^c$blue^ $get_ssid" ;;
-     down) printf "^c$black^^b$blue^ 󰤭 ^d^%s" "^c$blue^ Disconnect" ;;
+     up) printf "^c$black^^b$blue^ 直 ^d^%s" "^c$blue^ $get_ssid" ;;
+     down) printf "^c$black^^b$blue^ 睊 ^d^%s" "^c$blue^ Disconnect" ;;
  	esac
  }
 
 clock() {
-	printf "^c$black^^b$darkblue^ 󱑆 ^d^%s" "^c$black^^b$blue^ $(date '+%_a,%e %H:%M') "
+	printf "^c$darkblack^^b$white^  ^d^%s" "^c$white^^b$darkblack^ $(date '+%_a,%e %H:%M') "
 }
 
 volume() {
@@ -59,7 +57,14 @@ mpd() {
   get_artist=$(mpc -f "%artist%"| awk NR==1 | cut -c 1-30)
   get_title=$(mpc -f "%title%"| awk NR==1 | cut -c 1-30)
   if pgrep mpd > /dev/null; then
-    [ "$get_title" = "volume: n/a   repeat: off   ra" ] && printf "^b$grey^ Stopped ^d^" || printf "^b$grey^^c$yellow^ $get_artist^d^%s" "^b$grey^^c$white^ $get_title ^d^"
+    case "$(mpc status -f %state% | awk NR==2 | cut -c-9)" in
+      "[playing]") printf "^b$grey^  ^d^%s" "^b$grey^^c$yellow^$get_artist^c$white^ $get_title ^d^" 
+      ;;
+      "[paused] ") printf "^b$grey^  ^d^%s" "^b$grey^^c$yellow^$get_artist^c$white^ $get_title ^d^" 
+      ;;
+      *) printf "^b$grey^ Stopped ^d^" 
+      ;;
+    esac
   else
     printf "^b$grey^^c$white^ Offline ^d^"
   fi
